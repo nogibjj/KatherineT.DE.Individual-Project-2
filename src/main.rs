@@ -1,5 +1,5 @@
-use KatherineT.DE.Individual-2::{extract, query, transform_load};
 use std::env;
+use rust_invidivual_project::{extract, transform_load, query}; // Import the log_query function
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -13,7 +13,7 @@ fn main() {
         "extract" => {
             let result = extract(
                 "https://github.com/fivethirtyeight/data/blob/master/births/US_births_2000-2014_SSA.csv?raw=true",
-                "data/births.csv",
+                "births.csv",
             );
             match result {
                 Ok(path) => println!("Data extraction completed successfully. Saved to {}", path),
@@ -21,7 +21,7 @@ fn main() {
             }
         }
         "transform_load" => {
-            let result = transform_load("births.csv");
+            let result = transform_load("cars.csv");
             match result {
                 Ok(path) => println!(
                     "Data transformation and loading completed successfully. DB path: {}",

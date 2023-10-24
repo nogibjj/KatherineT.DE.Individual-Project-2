@@ -1,14 +1,8 @@
-use csv::ReaderBuilder;
-use reqwest;
-use reqwest::blocking::Client;
-use rusqlite::{params, Connection};
-use std::fs;
 use std::fs::File;
 use std::fs::OpenOptions;
 use std::io::Write;
-use std::io::{prelude::*, BufReader};
+use rusqlite::{params, Connection, Error, Row};
 
-// Logging SQL queries to a Markdown file.
 const LOG_FILE: &str = "query_log.md";
 fn log_query(query: &str, log_file: &str) {
     if let Ok(mut file) = OpenOptions::new().append(true).create(true).open(log_file) {
@@ -20,9 +14,8 @@ fn log_query(query: &str, log_file: &str) {
     }
 }
 
-// Defining a births struct for representing births data.
 #[derive(Debug)]
-struct births {
+pub struct Births {
     year: i32,
     month: i32,
     date_of_month: i32,
@@ -30,7 +23,7 @@ struct births {
     births: i32,
 }
 
-// Extract dataset from a URL and save it to a file
+// Function to extract data from a URL and save to a file
 pub fn extract(url: &str, file_path: &str) -> Result<String, Box<dyn std::error::Error>> {
     let content = reqwest::blocking::get(url)?.bytes()?;
     let mut file = File::create(file_path)?;
@@ -87,6 +80,8 @@ pub fn transform_load(dataset: &str) -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
+
+
 fn create_births_from_row(row: &Row) -> Result<Births, Error> {
     Ok(Births {
         year: row.get(0)?,
@@ -121,3 +116,4 @@ pub fn query(query_string: &str) -> Result<Vec<Births>, rusqlite::Error> {
         Ok(Vec::new()) // Return an empty vector for non-SELECT queries
     }
 }
+

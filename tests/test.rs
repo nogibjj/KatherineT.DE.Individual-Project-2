@@ -1,4 +1,4 @@
-use KatherineT.DE.Individual-2::{extract, query, transform_load};
+use rust_invidivual_project::{extract, transform_load, query}; // Import the log_query function
 
 #[test]
 fn test_extract_and_transform_load() {
