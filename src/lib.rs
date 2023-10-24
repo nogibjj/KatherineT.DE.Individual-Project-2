@@ -1,7 +1,7 @@
+use rusqlite::{params, Connection, Error, Row};
 use std::fs::File;
 use std::fs::OpenOptions;
 use std::io::Write;
-use rusqlite::{params, Connection, Error, Row};
 
 const LOG_FILE: &str = "query_log.md";
 fn log_query(query: &str, log_file: &str) {
@@ -80,8 +80,6 @@ pub fn transform_load(dataset: &str) -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-
-
 fn create_births_from_row(row: &Row) -> Result<Births, Error> {
     Ok(Births {
         year: row.get(0)?,
@@ -97,7 +95,11 @@ pub fn query(query_string: &str) -> Result<Vec<Births>, rusqlite::Error> {
     let conn = Connection::open("BirthsDB.db")?;
     let mut stmt = conn.prepare(query_string)?;
 
-    if query_string.trim_start().to_uppercase().starts_with("SELECT") {
+    if query_string
+        .trim_start()
+        .to_uppercase()
+        .starts_with("SELECT")
+    {
         let births_iter = stmt.query_map([], |row| create_births_from_row(row))?;
 
         let mut result = Vec::new();
@@ -116,4 +118,3 @@ pub fn query(query_string: &str) -> Result<Vec<Births>, rusqlite::Error> {
         Ok(Vec::new()) // Return an empty vector for non-SELECT queries
     }
 }
-

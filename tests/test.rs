@@ -1,24 +1,41 @@
-use rust_invidivual_project::{extract, transform_load, query}; // Import the log_query function
+use rust_invidivual_project::{extract, query, transform_load};
 
-#[test]
-fn test_extract_and_transform_load() {
-    let url = "https://github.com/fivethirtyeight/data/blob/master/births/US_births_2000-2014_SSA.csv?raw=true";
-    let file_path = "data/births.csv";
+#[cfg(test)]
+mod tests {
+    // Import the functions you want to test
+    use super::{extract, query, transform_load};
 
-    // Extract
-    extract(url, file_path).unwrap();
-    assert!(std::fs::metadata(file_path).is_ok());
+    // Write test functions
+    #[test]
+    fn test_extract() {
+        // Test the extract function
+        let result = extract("https://github.com/fivethirtyeight/data/blob/master/births/US_births_2000-2014_SSA.csv?raw=true", "test.csv");
+        assert!(result.is_ok()); // Check if the result is Ok
+    }
 
-    // Transform and Load
-    let result = transform_load(file_path);
-    assert_eq!(result.unwrap(), "BirthsDB.db");
-}
+    #[test]
+    fn test_transform_load() {
+        // Test the transform_load function
+        let result = transform_load("test.csv");
+        match result {
+            Ok(()) => println!("Transform and load succeeded."),
+            Err(e) => {
+                eprintln!("Error during loading: {:?}", e);
+                panic!("Transform and load failed.");
+            }
+        }
+    }
 
-#[test]
-fn test_query() {
-    // Query the top 5 rows from the CarsDB table
-    let result = query("SELECT * FROM BirthsDB WHERE year=2000 LIMIT 10;");
-
-    // Check if the query was successful and returns 10 rows
-    assert!(result.is_ok());
+    #[test]
+    fn test_query() {
+        // Test the query function
+        let result = query("SELECT * FROM Births");
+        match result {
+            Ok(_) => println!("Query succeeded."),
+            Err(e) => {
+                eprintln!("Error during query: {:?}", e);
+                panic!("Query failed.");
+            }
+        }
+    }
 }

@@ -1,5 +1,5 @@
-use std::env;
-use rust_invidivual_project::{extract, transform_load, query}; // Import the log_query function
+use rust_invidivual_project::{extract, query, transform_load};
+use std::env; // Import the log_query function
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -20,16 +20,10 @@ fn main() {
                 Err(e) => eprintln!("Error during extraction: {:?}", e),
             }
         }
-        "transform_load" => {
-            let result = transform_load("cars.csv");
-            match result {
-                Ok(path) => println!(
-                    "Data transformation and loading completed successfully. DB path: {}",
-                    path
-                ),
-                Err(e) => eprintln!("Error during loading: {:?}", e),
-            }
-        }
+        "transform_load" => match transform_load("births.csv") {
+            Ok(()) => println!("Data transformation and loading completed successfully."),
+            Err(e) => eprintln!("Error during loading: {:?}", e),
+        },
         "query" => {
             if args.len() < 3 {
                 println!("Please provide a SQL query string");

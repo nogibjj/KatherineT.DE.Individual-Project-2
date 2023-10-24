@@ -82,7 +82,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: optimized-binary
-        path: target/release/invidivual_project_rust_yabei
+        path: target/release/rust_invidivual_project
 
     - name: Generate and push logs
       run: make generate_and_push
