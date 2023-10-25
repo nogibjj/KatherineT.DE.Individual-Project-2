@@ -1,6 +1,6 @@
-# Data Engineering Mini Project 7
+# Data Engineering Individual Project 2
 ## Purpose
-This template aimed to create functions, using Rust and package a Rust Script into a Command-Line Tool. The folder I used is `calc-cli-with-tests`. This folder includes a vector `FRUITS` with names of different kinds of fruits that is native to Portugal and a function `get_fruits` that selects a random fruit from the vector. I came up with my own function `is_portuguese_fruit` to find out if a fruit is in the vector and tested with three fruits. A new command line argument was created to fit my function and return a full sentence of results. 
+This project Rust CLI Binary with SQLite aims to use Rust Script to interact with SQL database and demostrate CRUD operations. I created three functions that achieve extract data from a URL, transform and load the data into SQLite Database and query from the dataset. GitHub Copilot was used during the developing process. GitHub Actions was used to set up the environment, test, format and lint. Dataset used in this project is from FiveThirtyEight's public dataset, called Births. It contains births data from 2000-2014. 
 
 ## Steps 
 1. Fork the repository at https://github.com/nogibjj/rust-data-engineering
