@@ -41,3 +41,7 @@ The project uses GitHub Actions for continuous integration and continuous deploy
 - Lint
 - Tests
 - Build the Rust binary
+
+## Demo Video
+This is the link to my demo video:
+https://youtu.be/uNu-MPrMfww
